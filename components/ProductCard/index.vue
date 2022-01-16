@@ -1,0 +1,93 @@
+<template>
+  <div class="product-card">
+    <div class="product-card__image">
+      <img :src="image" >
+    </div>
+    <div class="product-card__content">
+      <div class="product-card__title">
+        {{ product.title }}
+      </div>
+      <div class="product-card__description">
+        {{ product.description }}
+      </div>
+      <div class="product-card__price">
+        {{ product.price }} руб.
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { defineComponent, computed } from '@vue/composition-api'
+
+export default defineComponent({
+  name: 'ProductCard',
+  props: {
+    product: {
+      type: Object,
+      default: () => ({}),
+      reqired: true
+    }
+  },
+  setup(props) {
+    const image = computed(() => props.product.image || require('@/assets/no-photo.jpg'));
+
+    return {
+      image
+    }
+  },
+})
+</script>
+
+<style lang="scss" scoped>
+.product-card {
+  height: 423px;
+  background: #FFFEFB;
+  box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04), 0px 6px 10px rgba(0, 0, 0, 0.02);
+  border-radius: 4px;
+  transition: 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.14);
+  }
+
+  &__image {
+    height: 200px;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__content {
+    padding: 16px
+  }
+
+  &__title {
+    margin-bottom: 16px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    color: #3F3F3F;
+  }
+
+  &__description {
+    height: 80px;
+    overflow: hidden;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #3F3F3F;
+    margin-bottom: 32px;
+  }
+
+  &__price {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    color: #3F3F3F;
+  }
+}
+</style>
