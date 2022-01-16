@@ -56,6 +56,7 @@ export default defineComponent({
     height: 200px;
 
     img {
+      border-radius: 4px 4px 0 0;
       height: 100%;
       width: 100%;
     }
@@ -66,27 +67,21 @@ export default defineComponent({
   }
 
   &__title {
+    @include font(20px, 600, 25px);
     margin-bottom: 16px;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 25px;
     color: #3F3F3F;
   }
 
   &__description {
     height: 80px;
     overflow: hidden;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 20px;
+    @include font(16px, normal, 20px);
     color: #3F3F3F;
     margin-bottom: 32px;
   }
 
   &__price {
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 30px;
+    @include font(24px, 600, 30px);
     color: #3F3F3F;
   }
 }

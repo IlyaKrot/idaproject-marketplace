@@ -19,6 +19,7 @@
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.1-rc.5",
     "@nuxtjs/composition-api": "^0.31.0",
+    "@nuxtjs/style-resources": "^1.2.1",
     "@vue/apollo-composable": "^4.0.0-alpha.16",
     "@vue/cli-shared-utils": "^4.5.15",
     "core-js": "^3.19.3",

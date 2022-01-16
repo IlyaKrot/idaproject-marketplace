@@ -17,14 +17,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-  @import "./assets/style/main.scss";
-  
-  .app {
-    &__wrapper {
-      height: 100%;
-      min-height: 100vh;
-      background: rgba(255, 254, 251, 0.8);
-    }
+.app {
+  &__wrapper {
+    height: 100%;
+    min-height: 100vh;
+    background: rgba(255, 254, 251, 0.8);
   }
+}
 </style>
 

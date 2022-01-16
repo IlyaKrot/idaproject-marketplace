@@ -24,6 +24,10 @@ const ADD_GOODS = gql`
   mutation add ($object: goods_insert_input!) {
     insert_goods_one(object: $object) {
       id
+      title
+      description
+      price
+      image
     }
   }
 `

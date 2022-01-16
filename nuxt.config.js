@@ -29,6 +29,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    '@nuxtjs/style-resources',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -42,6 +43,10 @@ export default {
     transpile: [
       '@vue/apollo-composable'
     ]
+  },
+
+  styleResources: {
+    scss: ['./assets/style/main.scss']
   },
 
   apollo: {
