@@ -70,7 +70,7 @@ export default defineComponent({
       && product.value.price
     ))
 
-    function sendForm () {
+    const sendForm = () => {
       if (activeButton.value) {
         emit('sendForm', product.value)
         product.value = {

@@ -17,7 +17,6 @@
       class="input__input"
       @input="input"
     />
-    <span class="input__error">{{ error }}</span>
   </div>
 </template>
 
@@ -55,15 +54,9 @@ export default defineComponent({
       type: String,
       default: 'text'
     },
-    error: {
-      type: String,
-      default: ''
-    },
   },
   setup(_, { emit }) {
-    function input(e) {
-      emit('input', e.target.value);
-    }
+    const input = (e) => emit('input', e.target.value);
 
     return {
       input
@@ -105,10 +98,6 @@ export default defineComponent({
       @include font(12px, normal, 15px);
       color: #B4B4B4;
     }
-  }
-
-  &__error {
-
   }
 }
 </style>

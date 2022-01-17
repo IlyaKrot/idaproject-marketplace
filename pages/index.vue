@@ -2,7 +2,13 @@
   <div class="main-page">
     <div class="main-page__wrapper">
       <div class="main-page__header">
-        <span class="main-page__header-title">Добавление товара</span>
+        <div class="main-page__header-title">Добавление товара</div>
+        <Select
+          id="main-page-select"
+          class="main-page__select"
+          :options="orderOptions"
+          @select="selectOrder"
+        />
       </div>
       <div class="main-page__content">
         <ProductForm
@@ -19,6 +25,7 @@
               v-for="product in result.goods"
               :key="product.id"
               :product="product"
+              @remove="removeProduct"
             />
           </div>
         </div>
@@ -30,17 +37,36 @@
 <script>
 import { defineComponent, ref } from '@vue/composition-api'
 import { useQuery, useMutation } from '@vue/apollo-composable/dist';
-import { GET_GOODS, ADD_GOODS } from '@/graphql/types';
+import { GET_GOODS, ADD_GOODS, REMOVE_GOODS } from '@/graphql/types';
 
 export default defineComponent({
   name: "MainPage",
   components: {
     ProductCard: () => import('@/components/ProductCard/index'),
-    ProductForm: () => import('@/components/ProductForm/index')
+    ProductForm: () => import('@/components/ProductForm/index'),
+    Select: () => import('@/components/ui/Select/index')
   },
   setup() {
-    const { result, loading } = useQuery(GET_GOODS);
     const sendFormLoading = ref(false)
+    const selectedOrder = ref({ title: 'asc' })
+    const orderOptions = [
+      {
+        value: { title: 'asc' },
+        title: 'По наименованию'
+      },
+      {
+        value: { price: 'asc' },
+        title: 'По цене (от меньшего к большему)'
+      },
+      {
+        value: { price: 'desc' },
+        title: 'По цене (от большего к меньшему)'
+      }
+    ]
+
+    const { result, loading, refetch } = useQuery(GET_GOODS, () => ({
+      order_by: selectedOrder.value
+    }))
 
     const {
       mutate: addGoods,
@@ -48,7 +74,9 @@ export default defineComponent({
       onError
     } = useMutation(ADD_GOODS);
 
-    function sendForm (formData) {
+    const { mutate: removeGoods } = useMutation(REMOVE_GOODS);
+
+    const sendForm = (formData) => {
       sendFormLoading.value = true
       addGoods({ object: formData },
         {
@@ -59,6 +87,17 @@ export default defineComponent({
           }
         }
       )
+    }
+
+    const removeProduct = (id) => {
+      const goods = result.value.goods
+      result.value.goods = goods.filter((el) => el.id !== id)
+      removeGoods({ id })
+    }
+
+    const selectOrder = (item) => {
+      selectedOrder.value = item
+      refetch()
     }
 
     onDone(() => {
@@ -73,7 +112,10 @@ export default defineComponent({
       result,
       loading,
       sendFormLoading,
-      sendForm
+      sendForm,
+      removeProduct,
+      orderOptions,
+      selectOrder
     };
   },
 })
@@ -100,6 +142,10 @@ export default defineComponent({
     text-align: center;
   }
 
+  &__select {
+    margin-left: auto;
+  }
+
   &__goods {
     flex: 1;
     margin-left: 16px;
@@ -111,7 +157,10 @@ export default defineComponent({
     grid-template-columns: 1fr 1fr 1fr;
   }
 
+
+
   &__header {
+    display: flex;
     margin-bottom: 16px;
 
     &-title {

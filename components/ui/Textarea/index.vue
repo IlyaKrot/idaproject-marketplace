@@ -17,7 +17,6 @@
       class="textarea__textarea"
       @input="input"
     />
-    <span class="textarea__error">{{ error }}</span>
   </div>
 </template>
 
@@ -59,15 +58,9 @@ export default defineComponent({
       type: Number,
       default: 3
     },
-    error: {
-      type: String,
-      default: ''
-    },
   },
   setup(_, { emit }) {
-    function input(e) {
-      emit('input', e.target.value);
-    }
+    const input = (e) => emit('input', e.target.value);
 
     return {
       input
@@ -109,10 +102,6 @@ export default defineComponent({
       @include font(12px, normal, 15px);
       color: #B4B4B4;
     }
-  }
-
-  &__error {
-
   }
 }
 </style>

@@ -30,7 +30,7 @@ export default defineComponent({
     }
   },
   setup({ disabled, loading }, { emit }) {
-    function click () {
+    const click = () => {
       if (!disabled && !loading) emit('click')
     }
 
